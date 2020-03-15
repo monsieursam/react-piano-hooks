@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { Fragment, useState, useEffect } from "react";
 import isAccidentalNote from "./utils/isAccidentalNote";
 import { getKeyboardShortcutsForNote } from "./utils/getKeyboardShortcutsForNote";
@@ -20,16 +21,9 @@ const Instrument = ({
     notesPlaying: []
   });
 
-  useEffect(() => {
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
-  }, []);
-
-  const getNoteFromKeyboardKey = keyboardKey => {
-    return keyboardMap[keyboardKey.toUpperCase()];
-  };
-
   const handleKeyDown = e => {
+    console.log(e)
+    
     if (isRegularKey(e) && !e.repeat) {
       const note = getNoteFromKeyboardKey(e.key);
       if (note) {
@@ -51,6 +45,17 @@ const Instrument = ({
       }
     }
   };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+  }, []);
+
+  const getNoteFromKeyboardKey = keyboardKey => {
+    return keyboardMap[keyboardKey]
+  };
+
+  
 
   const onPlayNoteStart = note => {
     setState({ ...state, notesPlaying: [...state.notesPlaying, note] });
